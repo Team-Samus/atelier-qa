@@ -1,1 +1,8 @@
+node_modules/
+
+# Environment Variables
+.env
+
+# ETL Files
 db/csv/
+db/load.sh
