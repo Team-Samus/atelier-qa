@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 const { Question } = require('../services');
 
 module.exports = {
@@ -13,12 +14,13 @@ module.exports = {
   },
 
   markHelpful: (req, res) => {
-    Question.markHelpful(req.params.question_id)
+    const { question_id } = req.params;
+    Question.markHelpful(question_id)
       .then((affectedRows) => {
         if (!affectedRows) { throw new Error('Question not found'); }
         return res.sendStatus(204);
       })
-      .catch((error) => { res.status(500).send(error.message || error); });
+      .catch((error) => { res.status(500).send(error.message); });
   },
 
   report: (req, res) => {
@@ -27,7 +29,7 @@ module.exports = {
         if (!affectedRows) { throw new Error('Question not found'); }
         return res.sendStatus(204);
       })
-      .catch((error) => { res.status(500).send(error.message || error); });
+      .catch((error) => { res.status(500).send(error.message); });
   },
 
 };
