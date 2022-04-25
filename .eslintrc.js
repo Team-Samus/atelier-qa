@@ -11,5 +11,6 @@ module.exports = {
   rules: {
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'global-require': 0,
+    'object-curly-newline': ['error', { ExportDeclaration: { multiline: true, minProperties: 5 } }],
   },
 };

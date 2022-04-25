@@ -9,8 +9,11 @@ module.exports = {
       .catch(() => { res.send('nope'); });
   },
 
-  create: (req, res) => {
-    res.send('Post');
+  create: async (req, res) => {
+    const question = await new Question(req.body).save();
+    const status = question ? 204 : 400;
+
+    res.sendStatus(status);
   },
 
   markHelpful: (req, res) => {
