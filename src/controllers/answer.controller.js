@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { Answer } = require('../services');
+const { Answer } = require('../models');
 
 module.exports = {
   findAll: (req, res) => {

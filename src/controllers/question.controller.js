@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-const { Question } = require('../services');
+const { Question } = require('../models');
 
 module.exports = {
 
