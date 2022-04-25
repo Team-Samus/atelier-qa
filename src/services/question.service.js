@@ -20,5 +20,5 @@ const queries = {
 module.exports = {
   findOne: () => db.any(queries.findOne),
   markHelpful: (qid) => db.result(queries.markHelpful, [qid], (r) => r.rowCount),
-  report: (qid) => db.result(queries.report, [qid]),
+  report: (qid) => db.result(queries.report, [qid], (r) => r.rowCount),
 };

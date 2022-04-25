@@ -1,3 +1,3 @@
-const Question = require('./question.service');
-
-module.exports = { Question };
+module.exports = {
+  Question: require('./question.service'),
+};
