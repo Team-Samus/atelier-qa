@@ -22,7 +22,12 @@ module.exports = {
   },
 
   report: (req, res) => {
-    res.send('Helpful');
+    Question.report(req.params.question_id)
+      .then((affectedRows) => {
+        if (!affectedRows) { throw new Error('Question not found'); }
+        return res.sendStatus(204);
+      })
+      .catch((error) => { res.status(500).send(error.message || error); });
   },
 
 };
