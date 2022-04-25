@@ -1,3 +1,8 @@
+--  Execute this file from the command line by typing:
+--  createdb qa
+--  psql qa < src/schema.sql
+--  to create the database and the tables.
+
 DROP TABLE IF EXISTS questions, answers, photos;
 
 CREATE TABLE questions (
