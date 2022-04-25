@@ -1,6 +1,10 @@
+const { Question } = require('../services');
+
 module.exports = {
   findOne: (req, res) => {
-    res.send('Here is a question');
+    Question.findOne()
+      .then((results) => { res.send(results) })
+      .catch((err) => { res.send('nope') });
   },
   create: (req, res) => {
     res.send('Post');

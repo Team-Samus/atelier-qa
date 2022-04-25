@@ -1,6 +1,8 @@
 const express = require('express');
 const console = require('console');
 
+require('dotenv').config()
+
 const qaRouter = require('./routes');
 
 const app = express();
