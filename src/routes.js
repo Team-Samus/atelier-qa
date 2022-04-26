@@ -1,7 +1,7 @@
 const { questions, answers } = require('./controllers');
 
 module.exports = require('express').Router()
-  .get('/questions', questions.findOne)
+  .get('/questions', questions.findByProduct)
   .post('/questions', questions.create)
   .put('/questions/:question_id/helpful', questions.markHelpful)
   .put('/questions/:question_id/report', questions.report)

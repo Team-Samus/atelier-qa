@@ -3,36 +3,29 @@ const { Question } = require('../models');
 
 module.exports = {
 
-  findOne: (req, res) => {
-    Question.findOne()
-      .then((results) => { res.send(results); })
-      .catch(() => { res.send('nope'); });
+  findByProduct: async (req, res) => {
+    const { product_id, page, count } = req.query;
+    const questions = await Question.findByProduct(product_id, page, count);
+    if (!questions) res.sendStatus(400);
+    else res.status(200).send(questions);
   },
 
   create: async (req, res) => {
     const question = await new Question(req.body).save();
     const status = question ? 204 : 400;
-
     res.sendStatus(status);
   },
 
-  markHelpful: (req, res) => {
-    const { question_id } = req.params;
-    Question.markHelpful(question_id)
-      .then((affectedRows) => {
-        if (!affectedRows) { throw new Error('Question not found'); }
-        return res.sendStatus(204);
-      })
-      .catch((error) => { res.status(500).send(error.message); });
+  markHelpful: async (req, res) => {
+    const affectedRows = await Question.markHelpful(req.params.question_id);
+    const status = affectedRows ? 204 : 400;
+    res.sendStatus(status);
   },
 
-  report: (req, res) => {
-    Question.report(req.params.question_id)
-      .then((affectedRows) => {
-        if (!affectedRows) { throw new Error('Question not found'); }
-        return res.sendStatus(204);
-      })
-      .catch((error) => { res.status(500).send(error.message); });
+  report: async (req, res) => {
+    const affectedRows = await Question.report(req.params.question_id);
+    const status = affectedRows ? 204 : 400;
+    res.sendStatus(status);
   },
 
 };

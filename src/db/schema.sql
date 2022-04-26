@@ -13,8 +13,10 @@ CREATE TABLE questions (
   asker_name VARCHAR(50) NOT NULL,
   asker_email VARCHAR(60) NOT NULL,
   reported BOOLEAN NOT NULL DEFAULT FALSE,
-  question_helpfulness INTEGER NOT NULL
+  question_helpfulness INTEGER NOT NULL DEFAULT 0,
 );
+
+-- CREATE INDEX questions_reported_index ON questions(reported) WHERE reported IS FALSE;
 
 CREATE TABLE answers (
   answer_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,

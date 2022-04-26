@@ -1,27 +1,32 @@
 /* eslint-disable camelcase */
 const db = require('../db');
-const { findOne, markHelpful, create, report } = require('./question.queries');
+const queries = require('../db/question.queries');
 
 class Question {
-  constructor(attrs) {
-    this.attrs = attrs;
-    this.required = ['body', 'name', 'email', 'product_id'];
-  }
+  constructor(attrs) { Object.assign(this, attrs); }
 
-  async save() {
+  save() {
     if (!this.hasRequiredAttributes()) return false;
-
-    const { product_id, body, name, email } = this.attrs;
-    return db.any(create, [product_id, body, name, email]);
+    return db.result(queries.save, [this.product_id, this.body, this.name, this.email]);
   }
 
-  static async findOne() { db.any(findOne); }
+  static findByProduct(pid, page = 1, count = 5) {
+    const off = (page - 1) * count;
+    return db.one(queries.findByProduct, [pid, count, off], (r) => (r.api.results ? r.api : false));
+  }
 
-  static async markHelpful(qid) { db.result(markHelpful, [qid], (r) => r.rowCount); }
+  static markHelpful(qid) {
+    return db.result(queries.markHelpful, [qid], (r) => r.rowCount);
+  }
 
-  static async report(qid) { db.result(report, [qid], (r) => r.rowCount); }
+  static report(qid) {
+    return db.result(queries.report, [qid], (r) => r.rowCount);
+  }
 
-  hasRequiredAttributes() { return this.required.every((key) => this.attrs[key]); }
+  hasRequiredAttributes() {
+    const requiredAttributes = ['body', 'name', 'email', 'product_id'];
+    return requiredAttributes.every((key) => this[key]);
+  }
 }
 
 module.exports = Question;
