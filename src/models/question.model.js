@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 const db = require('../db');
 const queries = require('../db/question.queries');
 
@@ -11,15 +10,18 @@ class Question {
   }
 
   static findByProduct(pid, page = 1, count = 5) {
-    const off = (page - 1) * count;
+    if (!pid) return false;
+    const off = (count - 1) * page;
     return db.one(queries.findByProduct, [pid, count, off], (r) => (r.api.results ? r.api : false));
   }
 
   static markHelpful(qid) {
+    if (!qid) return false;
     return db.result(queries.markHelpful, [qid], (r) => r.rowCount);
   }
 
   static report(qid) {
+    if (!qid) return false;
     return db.result(queries.report, [qid], (r) => r.rowCount);
   }
 
