@@ -5,7 +5,7 @@ module.exports = require('express').Router()
   .post('/questions', questions.create)
   .put('/questions/:question_id/helpful', questions.markHelpful)
   .put('/questions/:question_id/report', questions.report)
-  .get('/questions/:question_id/answers', answers.findAll)
+  .get('/questions/:question_id/answers', answers.findByQuestion)
   .post('/questions/:question_id/answers', answers.create)
   .put('/answers/:answer_id/helpful', answers.markHelpful)
   .put('/answers/:answer_id/report', answers.report);

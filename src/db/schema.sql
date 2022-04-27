@@ -26,7 +26,7 @@ CREATE TABLE answers (
   answerer_name VARCHAR(50) NOT NULL,
   answerer_email VARCHAR(60) NOT NULL,
   reported BOOLEAN NOT NULL DEFAULT FALSE,
-  helpfulness INTEGER NOT NULL
+  helpfulness INTEGER NOT NULL DEFAULT 0,
 );
 
 CREATE TABLE photos (

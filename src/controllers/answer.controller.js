@@ -2,28 +2,30 @@
 const { Answer } = require('../models');
 
 module.exports = {
-  findAll: (req, res) => {
-    res.send('Here is an answer');
-  },
-  create: (req, res) => {
-    res.send('Post');
-  },
-  markHelpful: (req, res) => {
-    const { answer_id } = req.params;
-    Answer.markHelpful(answer_id)
-      .then((affectedRows) => {
-        if (!affectedRows) throw new Error('Answer not found');
-        return res.sendStatus(204);
-      })
-      .catch((error) => { res.status(500).send(error.message); });
+
+  findByQuestion: async (req, res) => {
+    const { page, count } = req.query;
+    const { question_id } = req.params;
+    console.log(question_id);
+    const answers = await Answer.findByQuestion(question_id, page, count);
+    console.log(answers);
+    if (!answers) res.sendStatus(400);
+    else res.status(200).send(answers);
   },
 
-  report: (req, res) => {
-    Answer.report(req.params.answer_id)
-      .then((affectedRows) => {
-        if (!affectedRows) throw new Error('Answer not found');
-        return res.sendStatus(204);
-      })
-      .catch((error) => { res.status(500).send(error.message); });
+  create: async (req, res) => {
+    req.body.question_id = req.params.question_id;
+    const status = await new Answer(req.body).save() ? 201 : 400;
+    res.sendStatus(status);
+  },
+
+  markHelpful: async (req, res) => {
+    const status = await Answer.markHelpful(req.params.answer_id) ? 204 : 400;
+    res.sendStatus(status);
+  },
+
+  report: async (req, res) => {
+    const status = await Answer.report(req.params.answer_id) ? 204 : 400;
+    res.sendStatus(status);
   },
 };

@@ -12,7 +12,7 @@ class Question {
   static findByProduct(pid, page = 1, count = 5) {
     if (!pid) return false;
     const off = (count - 1) * page;
-    return db.one(queries.findByProduct, [pid, count, off], (r) => (r.api.results ? r.api : false));
+    return db.one(queries.findByProduct, [pid, count, off]).catch(() => false);
   }
 
   static markHelpful(qid) {
